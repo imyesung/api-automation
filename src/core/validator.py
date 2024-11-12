@@ -8,6 +8,9 @@ def validate_apk_file(filename: str) -> tuple[bool, str, int]:
         tuple: (is_valid, filepath, file_size)
     """
     filepath = os.path.join(settings.UPLOAD_DIR, filename)
+    print(f"Looking for APK at: {filepath}")
+    print(f"Directory exists: {os.path.exists(os.path.dirname(filepath))}")
+    print(f"File exists: {os.path.exists(filepath)}")
     
     if not os.path.exists(filepath):
         return False, f"Error: {filename} not found in uploads directory", 0
