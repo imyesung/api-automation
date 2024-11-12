@@ -1,12 +1,12 @@
 import requests
-import config
 import os
+from src.config.settings import settings
 
 class MobSFClient:
     def __init__(self):
-        self.base_url = config.MOBSF_HOST
+        self.base_url = settings.MOBSF_HOST
         self.headers = {
-            'X-Mobsf-Api-Key': config.MOBSF_API_KEY
+            'X-Mobsf-Api-Key': settings.MOBSF_API_KEY
         }
     
     def upload_file(self, file_path):

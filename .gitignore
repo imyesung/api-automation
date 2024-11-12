@@ -1,10 +1,33 @@
-.DS_Store
-.env
+# Python
 __pycache__/
-*.pyc
-.venv/
-reports/
-uploads/*
-downloads/*
-!uploads/.gitkeep
-!downloads/.gitkeep
+*.py[cod]
+*$py.class
+*.so
+.Python
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Project specific
+data/uploads/*
+data/downloads/*
+!data/uploads/.gitkeep
+!data/downloads/.gitkeep
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
