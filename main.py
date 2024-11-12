@@ -1,5 +1,5 @@
 import sys
-from src.core.analyzer import APKAnalyzer
+from src.core.static import StaticAnalyzer
 from src.utils.file_utils import ensure_directory
 from src.config.settings import settings
 
@@ -13,7 +13,7 @@ def main():
     ensure_directory(settings.DOWNLOAD_DIR)
     
     # APK 분석 실행
-    analyzer = APKAnalyzer()
+    analyzer = StaticAnalyzer()
     analyzer.analyze(sys.argv[1])
 
 if __name__ == '__main__':

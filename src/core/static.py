@@ -4,19 +4,18 @@ from src.clients.mobsf import MobSFClient
 from src.core.validator import validate_apk_file
 from src.config.settings import settings
 
-class APKAnalyzer:
+class StaticAnalyzer:
     def __init__(self):
         self.client = MobSFClient()
     
     def analyze(self, apk_filename: str) -> bool:
-        """APK 파일 분석 실행"""
-        # 파일 검증 (참조: src/main.py startLine: 9, endLine: 20)
+        """APK 파일 정적 분석 실행"""
         is_valid, result, file_size = validate_apk_file(apk_filename)
         if not is_valid:
             print(result)
             return False
             
-        print(f"Analyzing {apk_filename} (size: {file_size} bytes)...")
+        print(f"Static analyzing {apk_filename} (size: {file_size} bytes)...")
         return self._process_analysis(result, apk_filename)
     
     def _process_analysis(self, apk_path: str, filename: str) -> bool:
