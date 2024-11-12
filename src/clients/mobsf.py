@@ -65,3 +65,37 @@ class MobSFClient:
         }
         response = requests.post(delete_url, data=data, headers=self.headers)
         return response.json()
+
+    def get_dynamic_apps(self):
+        """동적 분석 가능한 앱 목록 조회"""
+        url = f"{self.base_url}/api/v1/dynamic/get_apps"
+        try:
+            response = requests.get(url, headers=self.headers)
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            print(f"동적 분석 앱 목록 조회 실패: {str(e)}")
+            return None
+
+    def start_dynamic_analysis(self, file_hash: str, re_install: bool = True, install: bool = True):
+        """동적 분석 시작"""
+        url = f"{self.base_url}/api/v1/dynamic/start_analysis"
+        data = {
+            'hash': file_hash,
+            're_install': 1 if re_install else 0,
+            'install': 1 if install else 0
+        }
+        try:
+            response = requests.post(url, data=data, headers=self.headers)
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            print(f"동적 분석 시작 실패: {str(e)}")
+            return None
+
+    def get_logcat(self, package_name: str):
+        """Get logcat logs"""
+        url = f"{self.base_url}/api/v1/android/logcat"
+        data = {'package': package_name}
+        response = requests.post(url, data=data, headers=self.headers)
+        return response.text
