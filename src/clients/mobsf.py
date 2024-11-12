@@ -43,15 +43,19 @@ class MobSFClient:
         response = requests.post(report_url, data=data, headers=self.headers)
         return response.json()
 
-    def download_report(self, file_hash, report_type='pdf'):
-        """Download scan report in PDF or JSON format"""
-        download_url = f"{self.base_url}/api/v1/download_report"
+    def download_report(self, file_hash, report_type='json'):
+        """Download scan report in JSON format"""
+        report_url = f"{self.base_url}/api/v1/report_json"
         data = {
-            'hash': file_hash,
-            'type': report_type
+            'hash': file_hash
         }
-        response = requests.post(download_url, data=data, headers=self.headers)
-        return response.content
+        try:
+            response = requests.post(report_url, data=data, headers=self.headers)
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            print(f"Download error: {str(e)}")
+            return None
 
     def delete_scan(self, file_hash):
         """Delete a scan"""

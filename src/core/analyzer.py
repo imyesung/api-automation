@@ -1,4 +1,5 @@
 import os
+import json
 from src.clients.mobsf import MobSFClient
 from src.core.validator import validate_apk_file
 from src.config.settings import settings
@@ -40,14 +41,14 @@ class APKAnalyzer:
         
     def _save_reports(self, file_hash: str, filename: str):
         """분석 결과 저장"""
-        report = self.client.get_report(file_hash)
-        print("\nAnalysis Results:")
-        print(report)
-        
-        pdf_report = self.client.download_report(file_hash, 'pdf')
-        report_path = os.path.join(settings.DOWNLOAD_DIR, f"{filename}_report.pdf")
-        
-        with open(report_path, 'wb') as f:
-            f.write(pdf_report)
+        report = self.client.download_report(file_hash)
+        if report is None:
+            print("Error: Failed to download JSON report")
+            return
             
-        print(f"Analysis complete! Report saved to: {report_path}") 
+        report_path = os.path.join(settings.DOWNLOAD_DIR, f"{filename}_report.json")
+        
+        with open(report_path, 'w', encoding='utf-8') as f:
+            json.dump(report, f, indent=2, ensure_ascii=False)
+            
+        print(f"Analysis complete! Report saved to: {report_path}")
