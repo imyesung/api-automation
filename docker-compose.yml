@@ -1,0 +1,16 @@
+version: '3'
+services:
+  mobsf:
+    image: opensecurity/mobile-security-framework-mobsf:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - MOBSF_API_KEY=${MOBSF_API_KEY}
+    volumes:
+      - ./uploads:/home/mobsf/uploads
+      - ./downloads:/home/mobsf/downloads
+    container_name: mobsf_scanner
+
+volumes:
+  mobsf_data:
+    name: ${PROJECT_NAME}_mobsf_data
